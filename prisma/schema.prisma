@@ -76,7 +76,6 @@ model Lab {
   last_name  String
   password   String
   name       String
-  image      String?
   city       String
 
   services Service[]
