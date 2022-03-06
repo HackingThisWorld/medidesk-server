@@ -1,11 +1,11 @@
 import { Router } from "express";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 import prisma from "../lib/prisma";
 const router = Router();
 
 router.post("/register", async (req, res) => {
     try {
-        const { first_name, last_name, name, password, image, city } = req.body;
+        const { first_name, last_name, name, password, city } = req.body;
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const service = await prisma.service.create({
@@ -14,14 +14,13 @@ router.post("/register", async (req, res) => {
                 first_name,
                 last_name,
                 name,
-                image,
-                city
-            }
-        })
+                city,
+            },
+        });
         res.json(service);
     } catch (error) {
-        res.status(500).json({ error })
+        res.status(500).json({ error });
     }
-})
+});
 
-export default router
+export default router;
