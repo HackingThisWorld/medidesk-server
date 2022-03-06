@@ -54,14 +54,14 @@ model verificationtokens {
 }
 
 model Test {
-  id                 Int      @unique @default(autoincrement())
+  id                 Int    @unique @default(autoincrement())
   first_name         String
   last_name          String
   hospital_name      String
   prescription_image String
   prescription_date  String
   user_email         String
-  user               users    @relation(fields: [user_email], references: [email])
+  user               users  @relation(fields: [user_email], references: [email])
 }
 
 model Service {
@@ -74,12 +74,13 @@ model Service {
 }
 
 model Lab {
-  id         Int    @unique @default(autoincrement())
-  first_name String
-  last_name  String
-  password   String
-  name       String
-  city       String
+  id           Int    @unique @default(autoincrement())
+  first_name   String
+  last_name    String
+  email        String
+  password     String
+  name         String
+  city         String
 
   services Service[]
 }
@@ -92,7 +93,7 @@ model Request {
 }
 
 model Consult {
-  id                 Int      @unique @default(autoincrement())
+  id                 Int    @unique @default(autoincrement())
   first_name         String
   last_name          String
   hospital_name      String
@@ -101,5 +102,5 @@ model Consult {
   prescription_image String
   prescription_date  String
   user_email         String
-  user               users    @relation(fields: [user_email], references: [email])
+  user               users  @relation(fields: [user_email], references: [email])
 }

@@ -5,7 +5,7 @@ const router = Router();
 
 router.post("/register", async (req, res) => {
   try {
-    const { first_name, last_name, name, password, city } = req.body;
+    const { first_name, last_name, name, password, city, email } = req.body;
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     const service = await prisma.lab.create({
@@ -15,10 +15,12 @@ router.post("/register", async (req, res) => {
         last_name,
         name,
         city,
+        email,
       },
     });
     res.json(service);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error });
   }
 });
