@@ -52,9 +52,12 @@ model verificationtokens {
 }
 
 model Test {
-  id                Int      @unique @default(autoincrement())
-  hospital_name     String
-  prescription_date DateTime
+  id                 Int      @unique @default(autoincrement())
+  first_name         String
+  last_name          String
+  hospital_name      String
+  prescription_image String
+  prescription_date  DateTime
 }
 
 model Service {
@@ -67,7 +70,7 @@ model Service {
 }
 
 model Lab {
-  id         Int     @unique @default(autoincrement())
+  id         Int    @unique @default(autoincrement())
   first_name String
   last_name  String
   password   String
