@@ -57,10 +57,6 @@ model Test {
   prescription_date DateTime
 }
 
-model Booking {
-  id Int @unique @default(autoincrement())
-}
-
 model Service {
   id             Int    @unique @default(autoincrement())
   name           String
