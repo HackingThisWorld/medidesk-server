@@ -59,7 +59,7 @@ model Test {
   last_name          String
   hospital_name      String
   prescription_image String
-  prescription_date  DateTime
+  prescription_date  String
   user_email         String
   user               users    @relation(fields: [user_email], references: [email])
 }
@@ -99,7 +99,7 @@ model Consult {
   city               String
   health_condition   String
   prescription_image String
-  prescription_date  DateTime
+  prescription_date  String
   user_email         String
   user               users    @relation(fields: [user_email], references: [email])
 }
