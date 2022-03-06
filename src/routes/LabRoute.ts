@@ -4,7 +4,7 @@ const router = Router();
 
 router.post("/register", async (req, res) => {
     try {
-        const { id, first_name, last_name, name, image, city } = req.body;
+        const { first_name, last_name, name, image, city } = req.body;
         const service = await prisma.service.create({
             data: {
                 first_name,

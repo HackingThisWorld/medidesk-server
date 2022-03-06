@@ -74,6 +74,7 @@ model Lab {
   id         Int     @unique @default(autoincrement())
   first_name String
   last_name  String
+  password   String
   name       String
   image      String?
   city       String
