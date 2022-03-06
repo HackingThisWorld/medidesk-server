@@ -21,17 +21,9 @@ router.post(
       isString: true,
     },
     email: {
-      custom: {
-        options: (value, { req }) => {
-          prisma.users.findUnique({ where: { email: value } }).then((test) => {
-            if (!test) {
-              return Promise.reject("User not found");
-            }
-          });
-        },
-      },
+      isEmail: true,
     },
-    prescriptionDate: {
+    prescription_date: {
       isString: true,
     },
   }),
@@ -57,19 +49,20 @@ router.post(
     const prescriptionImage: UploadedFile = req.files
       .prescription_file as UploadedFile;
     const formData = new FormData();
-    formData.append("image", prescriptionImage.data, {
+    formData.append("userkey", process.env.VGY_KEY);
+    formData.append("file", prescriptionImage.data, {
       filename: prescriptionImage.name,
     });
 
     try {
-      const imgurResponse = await fetch("https://api.imgur.com/3/upload", {
+      const vgyResponse = await fetch("https://vgy.me/upload", {
         method: "POST",
         body: formData,
       }).then((requestResponse) => requestResponse.json());
 
       const booking = await prisma.test.create({
         data: {
-          prescription_image: imgurResponse.data.link,
+          prescription_image: vgyResponse.image,
           user_email: email,
           first_name,
           last_name,
@@ -80,6 +73,7 @@ router.post(
 
       res.json(booking);
     } catch (error) {
+      res.status(500).json({ error });
       console.error(error);
     }
   }
@@ -155,25 +149,30 @@ router.post(
       const prescriptionImage: UploadedFile = req.files
         .prescription_file as UploadedFile;
       const formData = new FormData();
+      formData.append("userkey", process.env.VGY_KEY);
       formData.append("image", prescriptionImage.data, {
         filename: prescriptionImage.name,
       });
 
-      const imgurResponse = await fetch("https://api.imgur.com/3/upload", {
+      const vgyResponse = await fetch("https://vgy.me/upload", {
         method: "POST",
         body: formData,
       }).then((requestResponse) => requestResponse.json());
 
-      await prisma.consult.create({
-        prescription_image: imgurResponse.data.link,
-        use_email: email,
-        first_name,
-        last_name,
-        hospital_name,
-        city,
-        health_condition,
-        prescription_date,
+      const consult = await prisma.consult.create({
+        data: {
+          prescription_image: vgyResponse.image,
+          user_email: email,
+          first_name,
+          last_name,
+          hospital_name,
+          city,
+          health_condition,
+          prescription_date,
+        },
       });
+
+      res.json(consult);
     } catch (error) {
       console.log(error);
       res.status(500).json({ error });
