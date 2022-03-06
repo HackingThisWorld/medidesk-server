@@ -1,9 +1,16 @@
 require('dotenv').config();
 import express from "express";
 
+import BookingRoute from "./routes/BookingRoute";
+import LabRoute from "./routes/LabRoute";
+import ServiceRoute from "./routes/ServiceRoute";
+
 const app = express();
 
 app.use(express.json());
+app.use("/book", BookingRoute)
+app.use("/service", ServiceRoute);
+app.use("/lab", LabRoute);
 
 app.get('/', async (req, res) => {
     res.json({ message: 'Hello World' });
