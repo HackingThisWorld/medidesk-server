@@ -7,6 +7,7 @@ import ServiceRoute from "./routes/ServiceRoute";
 
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("forms", FormRoute);
 app.use("/book", BookingRoute)
