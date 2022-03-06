@@ -1,14 +1,9 @@
 require('dotenv').config();
-import { PrismaClient } from "@prisma/client";
 import express from "express";
 
-import BookingRoute from "./routes/BookingRoute";
-
-const prisma = new PrismaClient();
 const app = express();
 
 app.use(express.json());
-app.use("/book", BookingRoute)
 
 app.get('/', async (req, res) => {
     res.json({ message: 'Hello World' });
