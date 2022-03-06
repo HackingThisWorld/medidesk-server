@@ -20,7 +20,7 @@ router.post(
       isString: true,
     },
     email: {
-      isString: true,
+      isEmail: true,
     },
     prescription_date: {
       isString: true,
@@ -108,7 +108,7 @@ router.post(
       isString: true,
     },
     email: {
-      isString: true,
+      isEmail: true,
     },
     prescriptionDate: {
       isString: true,
