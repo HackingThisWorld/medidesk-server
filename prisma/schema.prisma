@@ -41,6 +41,8 @@ model users {
   image          String?
   accounts       accounts[]
   sessions       sessions[]
+  tests          Test[]
+  Consult        Consult[]
 }
 
 model verificationtokens {
@@ -58,6 +60,8 @@ model Test {
   hospital_name      String
   prescription_image String
   prescription_date  DateTime
+  user_email         String
+  user               users    @relation(fields: [user_email], references: [email])
 }
 
 model Service {
@@ -85,4 +89,17 @@ model Request {
   name    String
   email   String
   message String
+}
+
+model Consult {
+  id                 Int      @unique @default(autoincrement())
+  first_name         String
+  last_name          String
+  hospital_name      String
+  city               String
+  health_condition   String
+  prescription_image String
+  prescription_date  DateTime
+  user_email         String
+  user               users    @relation(fields: [user_email], references: [email])
 }
