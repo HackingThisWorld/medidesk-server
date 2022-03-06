@@ -33,8 +33,6 @@ router.post(
       return;
     }
 
-    console.log({ body: req.body });
-
     if (
       !req.files ||
       Object.keys(req.files).length === 0 ||
