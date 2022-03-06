@@ -106,24 +106,9 @@ router.post(
     },
     health_condition: {
       isString: true,
-      custom: {
-        options: (value, { req }) => {
-          if (!["low", "mid", "severe"].includes(value.toLowerCase())) {
-            return Promise.reject("health condition not found");
-          }
-        },
-      },
     },
     email: {
-      custom: {
-        options: (value, { req }) => {
-          prisma.users.findUnique({ where: { email: value } }).then((test) => {
-            if (!test) {
-              return Promise.reject("User not found");
-            }
-          });
-        },
-      },
+      isEmail: true,
     },
     prescriptionDate: {
       isString: true,
@@ -155,6 +140,17 @@ router.post(
         health_condition,
         prescription_date,
       } = req.body;
+
+      const hasUniqueEmail = await prisma.users.findUnique({
+        where: {
+          email,
+        },
+      });
+
+      if (!hasUniqueEmail) {
+        res.status(403).json({ message: "email not found" });
+        return;
+      }
 
       const prescriptionImage: UploadedFile = req.files
         .prescription_file as UploadedFile;
