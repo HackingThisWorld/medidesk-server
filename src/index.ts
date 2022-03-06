@@ -13,7 +13,7 @@ app.use(fileUpload());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("forms", FormRoute);
+app.use("/forms", FormRoute);
 app.use("/book", BookingRoute);
 app.use("/service", ServiceRoute);
 app.use("/lab", LabRoute);
