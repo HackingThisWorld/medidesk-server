@@ -1,12 +1,11 @@
 import { Router } from "express";
-import fileUpload, { UploadedFile } from "express-fileupload";
+import { UploadedFile } from "express-fileupload";
 import { checkSchema, validationResult } from "express-validator";
 import FormData from "form-data";
 import fetch from "node-fetch";
 import prisma from "../lib/prisma";
 
 const router = Router();
-router.use(fileUpload());
 
 router.post(
   "/test",
@@ -34,6 +33,8 @@ router.post(
       return;
     }
 
+    console.log({ body: req.body });
+
     if (
       !req.files ||
       Object.keys(req.files).length === 0 ||
@@ -45,6 +46,17 @@ router.post(
 
     const { first_name, last_name, email, hospital_name, prescription_date } =
       req.body;
+
+    const hasUniqueEmail = await prisma.users.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!hasUniqueEmail) {
+      res.status(403).json({ message: "email not found" });
+      return;
+    }
 
     const prescriptionImage: UploadedFile = req.files
       .prescription_file as UploadedFile;
