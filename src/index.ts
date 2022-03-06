@@ -1,6 +1,5 @@
 require('dotenv').config();
 import express from "express";
-
 import BookingRoute from "./routes/BookingRoute";
 import FormRoute from "./routes/FormRoute";
 import LabRoute from "./routes/LabRoute";

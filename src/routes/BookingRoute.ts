@@ -1,7 +1,7 @@
 import { Router } from "express";
-import fetch from "node-fetch"
-import FormData from "form-data"
-import fileUpload, { UploadedFile } from "express-fileupload"
+import fileUpload, { UploadedFile } from "express-fileupload";
+import FormData from "form-data";
+import fetch from "node-fetch";
 
 const router = Router()
 router.use(fileUpload())
